@@ -142,3 +142,4 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>> {
 
   Map<String, CartModel> get getCartItem => state;
 }
+// this will help us to get the CartItem from the CartProvider. We can use this in our CartScreen to get the CartItem and show it in the UI.
