@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "599441118761",
+    "project_id": "retoradiance-test",
+    "storage_bucket": "retoradiance-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599441118761:android:63e5d53cf05cc87126ee38",
+        "android_client_info": {
+          "package_name": "com.reto.reto_radiance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd1qxtchniSDoNzP7Z_EWjJw5lv2isrvo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
