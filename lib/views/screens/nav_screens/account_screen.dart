@@ -482,8 +482,6 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
       ref.invalidate(cartProvider);
       // Clear all user data from SharedPreferences
 
-
-
       // Clear navigation stack completely
       Navigator.pushAndRemoveUntil(
         context,
@@ -492,7 +490,6 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
       );
       // Clear Firebase session
       await _auth.signOut();
-      
     } catch (e) {
       // Handle logout errors
       ScaffoldMessenger.of(context).showSnackBar(
@@ -581,17 +578,25 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                     alignment: const Alignment(0, 0.03),
                     child: StreamBuilder<DocumentSnapshot>(
                       stream:
-                          FirebaseFirestore.instance
-                              .collection("customers")
-                              .doc(_auth.currentUser!.uid)
-                              .snapshots(),
+                          _auth.currentUser != null
+                              ? FirebaseFirestore.instance
+                                  .collection("customers")
+                                  .doc(_auth.currentUser!.uid)
+                                  .snapshots()
+                              : null,
                       builder: (context, snapshot) {
+                        if (_auth.currentUser == null) {
+                          return const Text(
+                            "Please log in to view your account details",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          );
+                        }
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Text("Loading...");
+                          return const Text("Loading...");
                         }
                         if (!snapshot.hasData || !snapshot.data!.exists) {
-                          return Text("Document not found!");
+                          return const Text("Document not found!");
                         }
                         return Text(
                           snapshot.data!["name"],
@@ -605,34 +610,46 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                         );
                       },
                     ),
-                    // child: Text(
-                    //   'Suvrajeet Jash',
-                    //   style: GoogleFonts.getFont(
-                    //     'DM Sans',
-                    //     color: Colors.white,
-                    //     fontSize: 22,
-                    //     fontWeight: FontWeight.bold,
-                    //     letterSpacing: 0.4,
-                    //   ),
-                    // ),
                   ),
+
+                  // child: Text(
+                  //   'Suvrajeet Jash',
+                  //   style: GoogleFonts.getFont(
+                  //     'DM Sans',
+                  //     color: Colors.white,
+                  //     fontSize: 22,
+                  //     fontWeight: FontWeight.bold,
+                  //     letterSpacing: 0.4,
+                  //   ),
+                  // ),
                   Align(
                     alignment: const Alignment(0.05, 0.17),
                     child: InkWell(
                       onTap: () {},
                       child: StreamBuilder<DocumentSnapshot>(
                         stream:
-                            FirebaseFirestore.instance
-                                .collection("customers")
-                                .doc(_auth.currentUser!.uid)
-                                .snapshots(),
+                            _auth.currentUser != null
+                                ? FirebaseFirestore.instance
+                                    .collection("customers")
+                                    .doc(_auth.currentUser!.uid)
+                                    .snapshots()
+                                : null,
                         builder: (context, snapshot) {
+                          if (_auth.currentUser == null) {
+                            return const Text(
+                              "Please log in to view your city",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            );
+                          }
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Text("Loading...");
+                            return const Text("Loading...");
                           }
                           if (!snapshot.hasData || !snapshot.data!.exists) {
-                            return Text("Document not found!");
+                            return const Text("Document not found!");
                           }
                           return Text(
                             snapshot.data!["city"],
@@ -901,11 +918,24 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
             SizedBox(height: 10),
             ListTile(
               onTap: () async {
-                await _logout(context);
+                if (_auth.currentUser != null) {
+                  // User is logged in, perform logout
+                  await _logout(context);
+                } else {
+                  // User is not logged in, navigate to LoginScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                }
               },
-              leading: Image.asset('assets/icons/logout.png'),
+              leading: Image.asset(
+                _auth.currentUser != null
+                    ? 'assets/icons/logout.png'
+                    : 'assets/icons/logout.png',
+              ),
               title: Text(
-                'Logout ',
+                _auth.currentUser != null ? 'Logout' : 'Sign In',
                 style: GoogleFonts.lato(fontWeight: FontWeight.bold),
               ),
             ),

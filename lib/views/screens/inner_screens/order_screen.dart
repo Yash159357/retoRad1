@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +13,15 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> ordersStream =
-    FirebaseFirestore.instance
-        .collection('orders')
-        .where(
-      'customerId',
-      isEqualTo: FirebaseAuth.instance.currentUser!.uid,
-    )
-        .snapshots(); //Accessing all the Orders of the Current User.
+        FirebaseAuth.instance.currentUser != null
+            ? FirebaseFirestore.instance
+                .collection('orders')
+                .where(
+                  'customerId',
+                  isEqualTo: FirebaseAuth.instance.currentUser!.uid,
+                )
+                .snapshots()
+            : const Stream.empty(); // Return an empty stream if no user is logged in. //Accessing all the Orders of the Current User.
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -32,9 +32,9 @@ class OrderScreen extends StatelessWidget {
         ), //The App Bar will take 20% of the screen size
         child: Container(
           width:
-          MediaQuery.of(context)
-              .size
-              .width, //The App Bar will take complete width of the screen size, although it is width of container but it will denote the width of App Bar only.
+              MediaQuery.of(context)
+                  .size
+                  .width, //The App Bar will take complete width of the screen size, although it is width of container but it will denote the width of App Bar only.
           height: 118, //Height of the container
           clipBehavior: Clip.hardEdge,
           decoration: const BoxDecoration(
@@ -52,7 +52,6 @@ class OrderScreen extends StatelessWidget {
                 top: 52,
                 child: Stack(
                   children: [
-
                     IconButton(
                       icon: Image.asset(
                         'assets/icons/home.png',
@@ -66,14 +65,13 @@ class OrderScreen extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) {
                               //This is the method to go to different screen
-                              return MainScreen(index: 1,);
+                              return MainScreen(index: 1);
                             },
                           ),
                           (route) => false,
                         );
                       },
                     ),
-
                   ],
                 ),
               ),
@@ -107,16 +105,13 @@ class OrderScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (snapshot.data!.docs.isEmpty) //If there are No Orders
-              {
+          if (snapshot.data == null ||
+              snapshot.data!.docs.isEmpty) // If there are no orders
+          {
             return const Center(
               child: Text(
                 'You Have Not Ordered Anything',
-                style: TextStyle(
-                  fontSize: 18,
-                  // color: Color(0xFF7F808C),
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
             );
           }
@@ -218,15 +213,15 @@ class OrderScreen extends StatelessWidget {
                                       width: 216,
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
                                             child: SizedBox(
                                               width: double.infinity,
                                               child: Column(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   //Displaying Product Name
@@ -238,7 +233,7 @@ class OrderScreen extends StatelessWidget {
                                                         fontSize: 16,
                                                         color: Colors.black,
                                                         fontWeight:
-                                                        FontWeight.w500,
+                                                            FontWeight.w500,
                                                       ),
                                                     ),
                                                   ),
@@ -248,7 +243,7 @@ class OrderScreen extends StatelessWidget {
                                                   //Displaying Product Category Name
                                                   Align(
                                                     alignment:
-                                                    Alignment.centerLeft,
+                                                        Alignment.centerLeft,
                                                     child: Text(
                                                       orderData['category'],
                                                       style: const TextStyle(
@@ -270,7 +265,7 @@ class OrderScreen extends StatelessWidget {
                                                       fontSize: 14,
                                                       color: Color(0xFF0B0C1E),
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
 
@@ -288,7 +283,7 @@ class OrderScreen extends StatelessWidget {
                                                       ),
 
                                                       fontWeight:
-                                                      FontWeight.w500,
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],
@@ -306,23 +301,23 @@ class OrderScreen extends StatelessWidget {
                                     top: 100,
                                     child: Container(
                                       width:
-                                      90, //Width of the Box where status will be shown
+                                          90, //Width of the Box where status will be shown
                                       height:
-                                      25, //Height of the Box where status will be shown
+                                          25, //Height of the Box where status will be shown
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                         //Color depending on the status of Order Delivery
                                         color:
-                                        orderData['delivered'] == true
-                                            ? Color(
-                                          0xFF3C55EF,
-                                        ) //This color will be shown when the order has been delivered.
-                                            : orderData['processing'] ==
-                                            true
-                                            ? Colors
-                                            .purple //This color will be shown when the order is in processing.
-                                            : Colors
-                                            .red, //This color will be shown when the order is cancelled.
+                                            orderData['delivered'] == true
+                                                ? Color(
+                                                  0xFF3C55EF,
+                                                ) //This color will be shown when the order has been delivered.
+                                                : orderData['processing'] ==
+                                                    true
+                                                ? Colors
+                                                    .purple //This color will be shown when the order is in processing.
+                                                : Colors
+                                                    .red, //This color will be shown when the order is cancelled.
 
                                         borderRadius: BorderRadius.circular(4),
                                       ),
@@ -338,7 +333,7 @@ class OrderScreen extends StatelessWidget {
                                               orderData['delivered'] == true
                                                   ? 'Delivered' //This text will be shown when the order has been delivered.
                                                   : orderData['processing'] ==
-                                                  true
+                                                      true
                                                   ? 'Processing' //This text will be shown when the order is in processing.
                                                   : 'Cancelled', //This text will be shown when the order is cancelled.
 
