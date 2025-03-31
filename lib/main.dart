@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:reto_radiance/controllers/category_controller.dart';
 import 'package:reto_radiance/views/splash_screen.dart';
 import 'package:reto_radiance/provider/shared_preference_provider.dart';
-
+// Yash
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //This line ensures that all our Widgets in Flutter has been initialised successfully and after this only we will initialise our Firebase.
 
