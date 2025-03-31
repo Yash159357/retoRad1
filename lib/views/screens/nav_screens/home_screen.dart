@@ -572,10 +572,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               },
               child: StreamBuilder<DocumentSnapshot>(
                 stream:
-                    FirebaseFirestore.instance
-                        .collection("customers")
-                        .doc(_auth.currentUser!.uid)
-                        .snapshots(),
+                    _auth.currentUser != null
+                        ? FirebaseFirestore.instance
+                            .collection("customers")
+                            .doc(_auth.currentUser!.uid)
+                            .snapshots()
+                        : null,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text("Loading...");

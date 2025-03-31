@@ -20,12 +20,31 @@ class SharedPreferenceController {
 
   Future<void> saveCartData(Map<String, CartModel> cartData) async {
     try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        throw Exception('Cannot save cart data: User not authenticated');
+      }
+
       final cartKey = _getUserKey('cartData');
-      final cartJsonList = cartData.values.map((item) => jsonEncode(item.toJson())).toList();
+      if (cartKey.isEmpty) {
+        throw Exception('Cart key is invalid');
+      }
+
+      final cartJsonList =
+          cartData.values.map((item) => jsonEncode(item.toJson())).toList();
+      if (cartJsonList.isEmpty) {
+        throw Exception('Cart data is empty, nothing to save');
+      }
+
+      // Ensure SharedPreferences is initialized
+      if (_prefs == null) {
+        throw Exception('SharedPreferences is not initialized');
+      }
+
       await _prefs.setStringList(cartKey, cartJsonList);
     } catch (e) {
       print('Error saving cart data: $e');
-      rethrow;
+      // rethrow;
     }
   }
 
@@ -45,12 +64,26 @@ class SharedPreferenceController {
 
   Future<void> saveFavoriteData(Map<String, FavoriteModel> favoriteData) async {
     try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        throw Exception('Cannot save favorite data: User not authenticated');
+      }
+
       final favoriteKey = _getUserKey('favoriteData');
-      final favoriteJsonList = favoriteData.values.map((item) => jsonEncode(item.toJson())).toList();
+      if (favoriteKey.isEmpty) {
+        throw Exception('Favorite key is invalid');
+      }
+
+      final favoriteJsonList =
+          favoriteData.values.map((item) => jsonEncode(item.toJson())).toList();
+      if (favoriteJsonList.isEmpty) {
+        throw Exception('Favorite data is empty, nothing to save');
+      }
+
       await _prefs.setStringList(favoriteKey, favoriteJsonList);
     } catch (e) {
       print('Error saving favorite data: $e');
-      rethrow;
+      // rethrow;
     }
   }
 
