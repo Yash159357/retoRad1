@@ -713,8 +713,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             //MAIN IMAGE DISPLAY SECTION
             Center(
               child: Container(
-                width: 260,
-                height: 274,
+                width: 360,
+                height: 374,
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(), //This will prevent an Error
                 //SECTION TO DISPLAY IMAGES OF THE PRODUCT
@@ -728,8 +728,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       top: 20,
                       child: Container(
                         //'clipBehavior' is not accessible within 'SizedBox' and const cannot be used when we have 'Container' inside.
-                        width: 260,
-                        height: 260,
+                        width: 360,
+                        height: 340,
                         clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(
@@ -747,8 +747,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       left: 22,
                       top: 0,
                       child: Container(
-                        width: 216,
-                        height: 274,
+                        width: 316,
+                        height: 374,
                         clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 255, 225, 156),

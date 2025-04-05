@@ -91,10 +91,6 @@
 // //   }
 // // }
 
-
-
-
-
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
@@ -199,7 +195,8 @@ class CategoryProductScreen extends ConsumerStatefulWidget {
   const CategoryProductScreen({super.key, required this.categoryModel});
 
   @override
-  ConsumerState<CategoryProductScreen> createState() => _CategoryProductScreenState();
+  ConsumerState<CategoryProductScreen> createState() =>
+      _CategoryProductScreenState();
 }
 
 class _CategoryProductScreenState extends ConsumerState<CategoryProductScreen> {
@@ -214,9 +211,13 @@ class _CategoryProductScreenState extends ConsumerState<CategoryProductScreen> {
   @override
   Widget build(BuildContext context) {
     final products = ref.watch(productProvider);
-    final filteredProducts = products.where(
-      (product) => product.category == widget.categoryModel.categoryName
-    ).toList();
+    final filteredProducts =
+        products
+            .where(
+              (product) =>
+                  product.category == widget.categoryModel.categoryName,
+            )
+            .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -243,8 +244,11 @@ class _CategoryProductScreenState extends ConsumerState<CategoryProductScreen> {
         crossAxisCount: 2,
         mainAxisSpacing: 15,
         crossAxisSpacing: 15,
-        childAspectRatio: 300 / 400,
-        children: products.map((product) => PopularItem(productData: product)).toList(),
+        childAspectRatio: 120 / 220,
+        children:
+            products
+                .map((product) => PopularItem(productData: product))
+                .toList(),
       ),
     );
   }
