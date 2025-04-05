@@ -34,7 +34,7 @@ class RecommendedProductWidgetState extends State<RecommendedProductWidget> {
       );
     }
     return SizedBox(
-      height: 250,
+      height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget.recommendedProducts.length,

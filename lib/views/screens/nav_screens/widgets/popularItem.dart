@@ -85,13 +85,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:reto_radiance/models/product_model.dart';
@@ -131,15 +124,16 @@ class PopularItem extends StatelessWidget {
               //We are using this so that our Product Image can be Circular
               borderRadius: BorderRadius.circular(6),
               child: Container(
-                width: 107,
-                height: 101,
+                width: 140,
+                height: 180,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(5),
                 ),
 
                 child: Image.network(
-                  productData.productImage[0], //Displaying only the first image of the Product.
+                  productData
+                      .productImage[0], //Displaying only the first image of the Product.
                   width: 91,
                   height: 101,
                   fit: BoxFit.contain,
@@ -156,8 +150,8 @@ class PopularItem extends StatelessWidget {
                 letterSpacing: 0.3,
                 fontWeight: FontWeight.bold,
                 decoration:
-                TextDecoration
-                    .lineThrough, //This will make a struck or cut (by drawing a line in middle) in our Text, because we want to highlight our discounted price and want our customers to notice that and cut our original price like we normally do in our marketing.
+                    TextDecoration
+                        .lineThrough, //This will make a struck or cut (by drawing a line in middle) in our Text, because we want to highlight our discounted price and want our customers to notice that and cut our original price like we normally do in our marketing.
               ),
             ),
 
