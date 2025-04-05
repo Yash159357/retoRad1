@@ -80,27 +80,6 @@ class CartNotifier extends StateNotifier<Map<String, CartModel>> {
     _saveState();
   }
 
-  // Add copyWith method to CartModel
-  // Add this inside your CartModel class:
-  // CartModel copyWith({int? quantity}) => CartModel(
-  //   productId: productId,
-  //   productName: productName,
-  //   category: category,
-  //   description: description,
-  //   productImage: productImage,
-  //   productSize: productSize,
-  //   productPrice: productPrice,
-  //   discount: discount,
-  //   quantity: quantity ?? this.quantity,
-  //   rating: rating,
-  //   totalReviews: totalReviews,
-  //   isPopular: isPopular,
-  //   isRecommended: isRecommended,
-  //   isSoldOut: isSoldOut,
-  //   vendorId: vendorId,
-  //   vendorName: vendorName,
-  // );
-
   void removeItem(String productId) {
     state = {...state..remove(productId)};
     _saveState();
