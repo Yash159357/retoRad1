@@ -453,6 +453,7 @@ import 'package:reto_radiance/models/product_model.dart';
 import 'package:reto_radiance/provider/product_provider.dart';
 import 'package:reto_radiance/views/screens/inner_screens/shipping_address_screen.dart';
 import 'package:reto_radiance/views/screens/nav_screens/reuseable_text_widget.dart';
+import 'package:reto_radiance/views/screens/nav_screens/widgets/animated_text_widget.dart';
 import 'package:reto_radiance/views/screens/nav_screens/widgets/banner_widget.dart';
 import 'package:reto_radiance/views/screens/nav_screens/widgets/category_item.dart';
 import 'package:reto_radiance/views/screens/nav_screens/widgets/icon_widget.dart';
@@ -623,6 +624,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 popularProducts: popularProducts,
               ),
               const SizedBox(height: 20),
+              const AnimatedTextWidget(),
+              const SizedBox(height: 40),
             ],
           ),
         ),
